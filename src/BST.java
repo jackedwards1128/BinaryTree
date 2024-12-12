@@ -155,8 +155,35 @@ public class BST {
      * @param val The value ot insert
      */
     public void insert(int val) {
-        // TODO: Complete insert
+        BSTNode currentNode = root;
+        while (true) {
+            if (currentNode.getVal() > val) {
+                if (currentNode.getLeft() != null) {
+                    currentNode = currentNode.getLeft();
+                    continue;
+                }
+                else
+                {
+                    currentNode.setLeft(new BSTNode(val));
+                    break;
+                }
+            }
+            else
+            {
+                if (currentNode.getRight() != null) {
+                    currentNode = currentNode.getRight();
+                    continue;
+                }
+                else
+                {
+                    currentNode.setRight(new BSTNode(val));
+                    break;
+                }
+            }
+        }
     }
+
+
 
     /**
      * Determines if the current BST is
@@ -164,8 +191,31 @@ public class BST {
      * @return true if valid false otherwise
      */
     public boolean isValidBST() {
-        // TODO: Optional Challenge!
-        return false;
+        // TODO: Optional Challenge
+        return validityParse(root);
+    }
+
+    public boolean validityParse(BSTNode n) {
+        if (n.getLeft() != null) {
+            if (n.getLeft().getVal() <= n.getVal()) {
+                return false;
+            }
+        }
+        if (n.getRight() != null) {
+            if (n.getRight().getVal() >= n.getVal()) {
+                return false;
+            }
+        }
+        boolean result = true;
+        if (n.getLeft() != null) {
+            result = validityParse(n.getLeft());
+        }
+        if (n.getRight() != null) {
+            if (result) {
+                result = validityParse(n.getRight());
+            }
+        }
+        return result;
     }
 
     public static void main(String[] args) {
@@ -195,5 +245,7 @@ public class BST {
         System.out.println("\nInorder traversal of binary tree is");
         sol = tree.getInorder();
         printNodes(sol);
+
+
     }
 }
